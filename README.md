@@ -75,6 +75,24 @@ bun dev
 
 ### Step 3: Visit https://localhost:4001
 
+### Deploying Postgres and Electric SQL on Coolify
+
+Use the `start-coolify.sh` helper to provision the database and the Electric SQL
+backend on a Coolify instance. The script starts the containers defined in the
+repository `docker-compose.yml`, waits for Postgres to accept connections and
+then applies the Prisma schema.
+
+```bash
+# copy the environment file and adjust credentials if needed
+cp .env.example .env
+
+# start services and apply the schema
+scripts/start-coolify.sh
+
+# optionally seed the database
+SEED_DB=true scripts/start-coolify.sh
+```
+
 ## 📝 License
 
 MIT License - feel free to use this project for learning and development purposes.
