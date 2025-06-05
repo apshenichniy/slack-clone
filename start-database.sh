@@ -71,7 +71,9 @@ if [ "$DB_PASSWORD" = "password" ]; then
   fi
   # Generate a random URL-safe password
   DB_PASSWORD=$(openssl rand -base64 12 | tr '+/' '-_')
-  sed -i '' "s#:password@#:$DB_PASSWORD@#" .env
+  # Update .env with the new password. Use a portable sed command that works on
+  # both GNU and BSD variants by creating a temporary backup file.
+  sed -i.bak "s#:password@#:$DB_PASSWORD@#" .env && rm -f .env.bak
 fi
 
 $DOCKER_CMD run -d \
